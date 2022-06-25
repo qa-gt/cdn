@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>题目选项加拼音</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        textarea {
+            width: 98%;
+            margin: 0 1%;
+        }
+
+        button {
+            margin: 1%;
+        }
+    </style>
+</head>
+
+<body>
+    <textarea id="textarea" rows="20" cols="30"></textarea>
+    <button id="button" onclick="main()">操作</button>
+    <textarea id="textarea2" rows="20" cols="30"></textarea>
+    <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/zh-lx/pinyin-pro@latest/dist/pinyin-pro.js"></script>
+    <script>
+        var { pinyin } = pinyinPro;
+    </script>
+    <script>
+        const t1 = $('#textarea');
+        const t2 = $('#textarea2');
+        function main() {
+            let text = t1.val();
+            text = text.replaceAll(/([\u4e00-\u9fa5]+)/g, function (match) {
+                if (match.length > 6) {
+                    return match;
+                }
+                console.log(match, pinyin(match));
+                return `${match}（${pinyin(match)}） `;
+            });
+            t2.val(text);
+        }
+    </script>
+</body>
+
+</html>

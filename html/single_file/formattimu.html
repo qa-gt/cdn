@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>格式化成题目</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        textarea {
+            width: 98%;
+            margin: 0 1%;
+        }
+
+        button {
+            margin: 1%;
+        }
+    </style>
+</head>
+
+<body>
+    <textarea id="textarea" rows="20" cols="30"></textarea>
+    <button id="button" onclick="main()">操作</button>
+    <textarea id="textarea2" rows="20" cols="30"></textarea>
+    <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+    <script>
+        const t1 = $('#textarea');
+        const t2 = $('#textarea2');
+        function main() {
+            let text = t1.val();
+            let result = /([\u4e00-\u9fa5]+)/g[Symbol.matchAll](text);
+            result = Array.from(result, x => x[0]);
+            let ans = "";
+            for (let i = 0; i < Math.ceil(result.length / 16); i++) {
+                ans += `${i + 1}. 下列各组词语的字音/字形全部正确的一项是（      ）\n`;
+                for (let j = 0; j < 16; j++) {
+                    ans += { "0": "A. ", "4": "B. ", "8": "C. ", "12": "D. " }[j] || "";
+                    if (result[i * 16 + j]) {
+                        ans += result[i * 16 + j] + (j % 4 !== 3 ? "    " : "\n");
+                    } else break;
+                }
+            }
+
+            t2.val(ans);
+        }
+    </script>
+</body>
+
+</html>
